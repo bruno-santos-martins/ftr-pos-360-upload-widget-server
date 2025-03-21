@@ -6,12 +6,28 @@ import fastifySwaggerUi from '@fastify/swagger-ui'
 import { fastify } from 'fastify'
 import {
 	hasZodFastifySchemaValidationErrors,
+	jsonSchemaTransform,
 	serializerCompiler,
 	validatorCompiler,
 } from 'fastify-type-provider-zod'
 
 import { uploadImageRoute } from './routes/upload-image.js'
+import { transformSwaggerSchema } from './transform-swagger-schema.js'
 const server = fastify()
+
+server.register(fastifyMultipart)
+server.register(fastifySwagger, {
+	openapi: {
+		info: {
+			title: 'Upload Server',
+			version: '1.0.0',
+		},
+	},
+	transform: transformSwaggerSchema,
+})
+server.register(fastifySwaggerUi, {
+	routePrefix: '/docs',
+})
 
 server.setValidatorCompiler(validatorCompiler)
 server.setSerializerCompiler(serializerCompiler)
@@ -31,19 +47,6 @@ server.setErrorHandler((error, request, reply) => {
 })
 
 server.register(fastifyCors, { origin: '*' })
-
-server.register(fastifyMultipart)
-server.register(fastifySwagger, {
-	openapi: {
-		info: {
-			title: 'Upload Server',
-			version: '1.0.0',
-		},
-	},
-})
-server.register(fastifySwaggerUi, {
-	routePrefix: '/docs',
-})
 
 server.register(uploadImageRoute)
 
