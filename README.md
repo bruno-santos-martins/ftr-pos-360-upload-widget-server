@@ -1,0 +1,1 @@
+# ftr-pos-360-upload-widget-server
