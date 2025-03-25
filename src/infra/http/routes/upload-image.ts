@@ -1,5 +1,7 @@
+import { uploadImage } from '@/app/functions/upload-image.js'
 import { db } from '@/infra/db/index.js'
 import { schema } from '@/infra/db/schemas/index.js'
+import { isRight } from '@/shared/either.js'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
@@ -11,8 +13,8 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async server => {
 				summary: 'Upload',
 				consumes: ['multipart/form-data'],
 				response: {
-					201: z.object({ uploadId: z.string() }),
-					409: z
+					201: z.object({ uploadId: z.string() }).describe('Image uploaded'),
+					400: z
 						.object({
 							message: z.string(),
 						})
@@ -27,18 +29,23 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async server => {
 				},
 			})
 
-			console.log(uploadedFile)
-			/*
-				await db.insert(schema.uploads).values({
-					name: 'teste.jpg',
-					remoteKey: 'teste.jpg',
-					remoteUrl: 'http://google.com.br',
-				})
-			*/
+			//console.log(uploadedFile)
 
-			return reply.status(201).send({
-				uploadId: 'testeid',
+			if (!uploadedFile) {
+				return reply.status(400).send({
+					message: 'File is requered.',
+				})
+			}
+
+			const resultado = await uploadImage({
+				fileName: uploadedFile.filename,
+				contentType: uploadedFile.mimetype,
+				contentStream: uploadedFile.file,
 			})
+
+			if (isRight(resultado)) {
+				return reply.status(201).send()
+			}
 		}
 	)
 }
