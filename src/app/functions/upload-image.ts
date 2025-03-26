@@ -43,5 +43,5 @@ export async function uploadImage(input: UploadImageInput): Promise<
 		remoteUrl: url,
 	})
 
-	return makeRight({ url: 'url' })
+	return makeRight({ url: url })
 }
