@@ -7,7 +7,7 @@ Este projeto é um backend completo para gerenciamento de upload de arquivos, de
 ## 🧰 Tecnologias utilizadas
 
 - **Node.js** – plataforma principal
-- **Express.js** – criação de rotas e middlewares
+- **Fastify.js** – criação de rotas e middlewares
 - **Cloudflare R2** – armazenamento de arquivos compatível com S3
 - **PostgreSQL** – banco de dados relacional
 - **Zod** – validação de dados
