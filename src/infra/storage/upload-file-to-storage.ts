@@ -30,6 +30,10 @@ export async function uploadFileToStorage(input: UploadFileToStorageInput) {
 
 	const uniqueFileName = `${folder}/${randomUUID()}-${sanitizedFileNameWithExtension}`
 
+	contentStream.on('data', chunk => {
+		console.log(chunk.length)
+	})
+
 	const upload = new Upload({
 		client: r2,
 		params: {
