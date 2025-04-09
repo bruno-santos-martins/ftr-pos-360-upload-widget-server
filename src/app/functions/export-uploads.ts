@@ -26,7 +26,11 @@ export async function exportUploads(
 	const { searchQuery } = exportUploadsInput.parse(input)
 	const { sql, params } = db
 		.select({
+			id: schema.uploads.id,
 			remoteUrl: schema.uploads.remoteUrl,
+			name: schema.uploads.name,
+			remote_url: schema.uploads.remoteUrl,
+			created_at: schema.uploads.createdAt,
 		})
 		.from(schema.uploads)
 		.where(
