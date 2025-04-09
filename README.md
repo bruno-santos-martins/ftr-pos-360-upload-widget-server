@@ -14,7 +14,7 @@ Este projeto é um backend completo para gerenciamento de upload de arquivos, de
 - **CSV Writer / Parser** – exportação e leitura de arquivos CSV
 - **Multer / Streams do Node.js** – upload de arquivos via stream
 - **Jest** – testes unitários e de integração
-- **CI (Continuous Integration)** – execução automatizada de testes
+- **CI (Continuous Integration)** – execução automatizada de testes Ao abrir Pr para main
 
 ---
 
