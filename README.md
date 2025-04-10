@@ -38,3 +38,27 @@ Content-Type: multipart/form-data
 
 FormData:
   - file: imagem.png
+
+🐳 Rodando o ambiente com Docker Compose
+Para iniciar o ambiente com o banco de dados PostgreSQL, execute:
+
+bash
+Copiar
+Editar
+docker-compose up -d
+Isso irá subir um container usando a imagem bitnami/postgresql, com as configurações de usuário e banco definidas no serviço pg.
+
+✅ Configurações utilizadas:
+Variável	Valor
+POSTGRES_USER	docker
+POSTGRES_PASSWORD	docker
+POSTGRES_DB	upload
+Porta	5432
+📂 Scripts de inicialização:
+O Docker irá executar automaticamente os arquivos presentes na pasta local ./docker, montada no container em:
+
+bash
+Copiar
+Editar
+/docker-entrypoint-initdb.d
+Você pode colocar arquivos .sql ou .sh nesse diretório para pré-configurar seu banco (criação de tabelas, seeds, etc).
